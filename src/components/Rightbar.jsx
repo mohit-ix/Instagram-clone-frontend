@@ -7,28 +7,28 @@ import Intercept from "../Tools/refrech";
 
 function Rightbar() {
   const { user, dispatch } = useContext(AuthContext);
-  const [Followings, setFollowings] = useState([]);
+  const [Friends, setFriends] = useState([]);
   const username = user.data.username;
   const axiosJWT = axios.create();
   Intercept(axiosJWT);
   useEffect(() => {
-    const getFollowings = async () => {
+    const getFriends = async () => {
       try {
-        const FollowingsList = await axios.get(
-          "http://localhost:8000/api/user/followings/" + username
+        const FriendsList = await axios.get(
+          "http://localhost:8000/admin/friends/" + username
         );
 
-        setFollowings(FollowingsList.data.followings);
+        setFriends(FriendsList.data.friends);
       } catch (e) {}
     };
-    getFollowings();
+    getFriends();
   }, [username]);
   return (
     <RightbarContainer>
       <div className="rightbarWrapper">
-        <span className="rightbarFollowingTitle">Followings</span>
-        <div className="rightbarFollowings">
-          {Followings.map((f) => (
+        <span className="rightbarFollowingTitle">Friends</span>
+        <div className="rightbarFriends">
+          {Friends.map((f) => (
             <div key={f._id} className="rightbarFollowing">
               <div className="rightbarfollowingLeft">
                 <Link
@@ -95,7 +95,7 @@ const RightbarContainer = styled.div`
     font-size: 18px;
     font-weight: bold;
   }
-  .rightbarFollowings {
+  .rightbarFriends {
     display: flex;
     padding-top: 5px;
     flex-direction: column;

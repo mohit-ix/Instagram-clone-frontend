@@ -31,6 +31,7 @@ function Login() {
         email: username.current.value,
         password: password.current.value,
       });
+      console.log(res);
       const { message, status, ...other } = res.data;
       dispatch({ type: "LOGIN_SUCCESS", payload: other });
     } catch (err) {

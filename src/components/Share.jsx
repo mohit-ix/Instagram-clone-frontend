@@ -33,14 +33,15 @@ function Share(props) {
         //   formDataFile
         // );
         const img = await axios.post("http://localhost:8000/upload", formDataFile);
-        console.log(img.data.imageUrl);
+        console.log(img.data);
         formDataInfo.imageUrl = img.data.imageUrl;
         console.log(formDataInfo.imageUrl);
+        console.log(user.accessToken);
 
-        const result = await axios.post("http://localhost:8000/admin/upload-post", formDataInfo, {
-          // headers: { Authorization: "Bearer " + user.accessToken },
+        const result = await axiosJWT.post("http://localhost:8000/admin/upload-post", formDataInfo, {
+          headers: { Authorization: "Bearer " + user.accessToken },
         });
-        console.log(result);
+        console.log("the results are: ", result);
         NotificationManager.success("Success", "Post has been created", 3000);
         props.hideAddPostHandler();
         navigate(`/home`);

@@ -100,7 +100,7 @@ function Post(props) {
           <p className="postText">{post.description}</p>
           <div className="postImgWrapper">
             <img
-              src={post.imgurl ? post.imgurl : "DEFAULT_IMG_URL"}
+              src={post.imageUrl ? post.imageUrl : "DEFAULT_IMG_URL"}
               alt=""
               className="postImg"
             />

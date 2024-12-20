@@ -31,19 +31,20 @@ function Feed(props) {
         `http://localhost:8000/home?page=${currPage}`,
         { headers: { Authorization: "Bearer " + user.accessToken } }
       );
-      if (res.data.Articles.length === 1) {
+      if (res.data.Posts.length === 1) {
         setWasLastList(true);
         setLoadingNewPosts(false);
       }
-      if (!res.data.Articles.length) {
+      if (!res.data.Posts.length) {
         setWasLastList(true);
         setLoadingNewPosts(false);
         return;
       }
       setPrevPage(currPage);
-      const sortedPost = [...posts, ...res.data.Articles].sort((p1, p2) => {
+      const sortedPost = [...posts, ...res.data.Posts].sort((p1, p2) => {
         return new Date(p2.createdAt) - new Date(p1.createdAt);
       });
+      console.log(sortedPost);
       setPosts(sortedPost);
     };
     if (!wasLastList && prevPage !== currPage) {
