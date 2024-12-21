@@ -27,7 +27,7 @@ function Post(props) {
   }, []);
   const deleteHandler = async () => {
     try {
-      await axiosJWT.delete(`http://localhost:8000/api/article/${post._id}`, {
+      await axiosJWT.delete(`http://localhost:8000/${post._id}`, {
         headers: { Authorization: "Bearer " + user.accessToken },
       });
       NotificationManager.success("Success", "Post has been deleted", 3000);
@@ -38,7 +38,7 @@ function Post(props) {
   };
   const likeHandler = async () => {
     try {
-      await axiosJWT.get(`http://localhost:8000/api/article/${post._id}/like`, {
+      await axiosJWT.get(`http://localhost:8000/${post._id}/like`, {
         headers: { Authorization: "Bearer " + user.accessToken },
       });
     } catch (error) {}

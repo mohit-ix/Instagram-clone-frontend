@@ -24,15 +24,17 @@ function EditProfile(props) {
       const formDataFile = new FormData();
       if (file) {
         formDataFile.append("file", file);
-        formDataFile.append("upload_preset", "raw8ntho");
-        const img = await axios.post(
-          "https://api.cloudinary.com/v1_1/YOUR_UPLOAD_PRESET/image/upload",
-          formDataFile
-        );
-        UpdateData.profilePicture = img.data.secure_url;
+        // formDataFile.append("upload_preset", "raw8ntho");
+        // const img = await axios.post(
+        //   "https://api.cloudinary.com/v1_1/YOUR_UPLOAD_PRESET/image/upload",
+        //   formDataFile
+        // );
+
+        const img = await axios.post("http://localhost:8000/upload", formDataFile);
+        UpdateData.profilePicture = img.data.imageUrl;
       }
       const res = await axiosJWT.put(
-        `http://localhost:8000/api/user/${user.data._id}`,
+        `http://localhost:8000/admin/${user.data._id}`,
         UpdateData,
         {
           headers: { Authorization: "Bearer " + user.accessToken },

@@ -22,26 +22,19 @@ function Share(props) {
     try {
       const formDataFile = new FormData();
       if (file) {
-        console.log(file);
         formDataFile.append("file", file);
-        formDataFile.append("upload_preset", "raw8ntho");
-
-        console.log(formDataFile);
+        // formDataFile.append("upload_preset", "raw8ntho")
 
         // const img = await axios.post(
         //   "https://api.cloudinary.com/v1_1/YOUR_UPLOAD_PRESET/image/upload",
         //   formDataFile
         // );
         const img = await axios.post("http://localhost:8000/upload", formDataFile);
-        console.log(img.data);
         formDataInfo.imageUrl = img.data.imageUrl;
-        console.log(formDataInfo.imageUrl);
-        console.log(user.accessToken);
 
-        const result = await axiosJWT.post("http://localhost:8000/admin/upload-post", formDataInfo, {
+        await axiosJWT.post("http://localhost:8000/upload-post", formDataInfo, {
           headers: { Authorization: "Bearer " + user.accessToken },
         });
-        console.log("the results are: ", result);
         NotificationManager.success("Success", "Post has been created", 3000);
         props.hideAddPostHandler();
         navigate(`/home`);

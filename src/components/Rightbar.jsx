@@ -48,7 +48,7 @@ function Rightbar() {
                   className="rightbarFollowingAction"
                   onClick={async () => {
                     await axiosJWT.put(
-                      `http://localhost:8000/api/user/${f.username}/unfollow`,
+                      `http://localhost:8000/admin/${f.username}/remove`,
                       {},
                       {
                         headers: {
@@ -59,7 +59,7 @@ function Rightbar() {
                     dispatch({ type: "UNFOLLOW", payload: f._id });
                   }}
                 >
-                  UnFollow
+                  Remove Friend
                 </span>
               </div>
             </div>

@@ -31,8 +31,8 @@ const AuthReducer = (state, action) => {
           ...state.user,
           data: {
             ...state.user.data,
-            followings: state.user.data.followings.filter(
-              (following) => following !== action.payload
+            friends: state.user.data.friends.filter(
+              (friend) => friend !== action.payload
             ),
           },
         },
@@ -44,7 +44,7 @@ const AuthReducer = (state, action) => {
           ...state.user,
           data: {
             ...state.user.data,
-            followings: [...state.user.data.followings, action.payload],
+            friends: [...state.user.data.friends, action.payload],
           },
         },
       };

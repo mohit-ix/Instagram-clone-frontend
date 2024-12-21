@@ -56,7 +56,7 @@ function Topbar(props) {
       try {
         if (searchquery.length >= 1) {
           const searchresult = await axios.get(
-            "http://localhost:8000/api/user/searchUser",
+            "http://localhost:8000/admin/searchUser",
             {
               params: { search: searchquery },
             }

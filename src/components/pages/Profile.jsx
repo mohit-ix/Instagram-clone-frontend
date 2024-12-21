@@ -13,11 +13,11 @@ function Profile(props) {
   const username = useParams().username;
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const [posts, setPosts] = useState([]);
-  const [followed, setFollowed] = useState(true);
+  const [friend, setFriend] = useState(true);
   const [showEditProfile, setshowEditProfile] = useState(false);
   const [user, setCurrentUser] = useState({
-    followers: [],
-    followings: [],
+    // followers: [],
+    friends: [],
   });
   const axiosJWT = axios.create();
   Intercept(axiosJWT);
@@ -29,13 +29,13 @@ function Profile(props) {
     setshowEditProfile(true);
   };
   useEffect(() => {
-    setFollowed(currentUser.data.followings.includes(user?._id));
-  }, [currentUser.data.followings, user._id]);
+    setFriend(currentUser.data.friends.includes(user?._id));
+  }, [currentUser.data.friends, user._id]);
   const followHandler = async () => {
     try {
-      if (followed) {
+      if (friend) {
         await axiosJWT.put(
-          `http://localhost:8000/api/user/${username}/unfollow`,
+          `http://localhost:8000/admin/${username}/remove`,
           {},
           {
             headers: { Authorization: "Bearer " + currentUser.accessToken },
@@ -44,7 +44,7 @@ function Profile(props) {
         dispatch({ type: "UNFOLLOW", payload: user._id });
       } else {
         await axiosJWT.put(
-          `http://localhost:8000/api/user/${username}/follow`,
+          `http://localhost:8000/admin/${username}/add`,
           {},
           {
             headers: { Authorization: "Bearer " + currentUser.accessToken },
@@ -52,17 +52,17 @@ function Profile(props) {
         );
         dispatch({ type: "FOLLOW", payload: user._id });
       }
-      setFollowed(!followed);
+      setFriend(!friend);
     } catch (e) {}
   };
   useEffect(() => {
     const fetchUser = async () => {
       const res = await axios.get(
-        "http://localhost:8000/api/user/u/" + username
+        "http://localhost:8000/admin/u/" + username
       );
       setCurrentUser(res.data.user);
       const pst = await axios.get(
-        "http://localhost:8000/api/article/u/" + username
+        "http://localhost:8000/u/" + username
       );
       setPosts(
         pst.data.sort((p1, p2) => {
@@ -112,7 +112,7 @@ function Profile(props) {
                   className="rightbarFollowButton"
                   onClick={followHandler}
                 >
-                  {followed ? "Unfollow" : "Follow"}
+                  {friend ? "Remove Friend" : "Add Friend"}
                 </button>
               )}
             </div>
@@ -121,13 +121,13 @@ function Profile(props) {
                 <span className="profileInfoNum"></span>
                 {posts.length} Posts
               </span>
-              <span className="profileInfoFollowers">
+              {/* <span className="profileInfoFollowers">
                 <span className="profileInfoNum"></span>
                 {user.followers.length} followers
-              </span>
-              <span className="profileInfoFollowings">
+              </span> */}
+              <span className="profileInfofriends">
                 <span className="profileInfoNum"></span>
-                {user.followings.length} followings
+                {user.friends.length} Friends
               </span>
             </div>
             <div className="profileBio">
@@ -144,8 +144,8 @@ function Profile(props) {
               <div className="profilePost">
                 <img
                   src={
-                    p.imgurl
-                      ? p.imgurl
+                    p.imageUrl
+                      ? p.imageUrl
                       : "http://localhost:3000/images/defaultpost.jpg"
                   }
                   alt=""
@@ -249,7 +249,7 @@ const ProfileContainer = styled.div`
   .profileInfoFollowers {
     padding-right: 30px;
   }
-  .profileInfoFollowings {
+  .profileInfofriends {
   }
   .profileInfoNum {
     font-weight: bold;
