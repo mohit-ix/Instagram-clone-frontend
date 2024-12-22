@@ -15,15 +15,15 @@ function ShowPost(props) {
     e.preventDefault();
     try {
       const submitData = {};
-      submitData.articleId = props.post._id;
-      submitData.description = yourComment;
-      await axiosJWT.post("http://localhost:8000/api/comment/", submitData, {
+      submitData.postId = props.post._id;
+      submitData.comment = yourComment;
+      await axiosJWT.post("http://localhost:8000/comment/", submitData, {
         headers: { Authorization: "Bearer " + user.accessToken },
       });
       const newComment = {};
       newComment.username = user.data.username;
       newComment.userPicture = user.data.profilePicture;
-      newComment.description = submitData.description;
+      newComment.description = submitData.comment;
       newComment._id = Math.random();
       setComments((comments) => [newComment, ...comments]);
       props.newComment();
@@ -34,13 +34,14 @@ function ShowPost(props) {
   };
   useEffect(() => {
     const fetchComment = async () => {
+      console.log(props.post._id);
       const res = await axios.get(
-        `http://localhost:8000/api/comment/${props.post._id}`
+        `http://localhost:8000/comment/${props.post._id}`
       );
 
       res.data.comments.forEach(async (comment) => {
         const res = await axios.get(
-          `http://localhost:8000/api/user/${comment.user}`
+          `http://localhost:8000/admin/${comment.user}`
         );
         comment.username = res.data.user.username;
         comment.userPicture = res.data.user.profilePicture;

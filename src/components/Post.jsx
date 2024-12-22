@@ -3,7 +3,8 @@ import styled from "styled-components";
 import Intercept from "../Tools/refrech";
 import { FiMoreVertical } from "react-icons/fi";
 import { AuthContext } from "../contexts/AuthContext/AuthContext";
-import { AiFillHeart } from "react-icons/ai";
+// import { AiFillHeart } from "react-icons/ai";
+import { FaArrowAltCircleUp, FaArrowAltCircleDown } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Modal from "./UI/Modal";
@@ -17,6 +18,7 @@ function Post(props) {
   const { user } = useContext(AuthContext);
   const [likes, setLikes] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
+  const [isDisliked, setIsDisliked] = useState(false);
   const [Countcomments, setCountComments] = useState(post.comment.length);
   const [showPost, setShowPost] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
@@ -24,6 +26,7 @@ function Post(props) {
   Intercept(axiosJWT);
   useEffect(() => {
     setIsLiked(post.likes.includes(user.data._id));
+    setIsDisliked(post.dislikes.includes(user.data._id));
   }, []);
   const deleteHandler = async () => {
     try {
@@ -43,8 +46,34 @@ function Post(props) {
       });
     } catch (error) {}
 
-    setLikes(isLiked ? likes - 1 : likes + 1);
+    setLikes((prevlikes) => {
+      return isLiked ? prevlikes - 1 : prevlikes + 1;
+    });
+    if (isDisliked) {
+      setLikes((prevlikes) => {
+        return prevlikes + 1;
+      });
+      setIsDisliked(!isDisliked);
+    }
     setIsLiked(!isLiked);
+  };
+  const dislikeHandler = async () => {
+    try {
+      await axiosJWT.get(`http://localhost:8000/${post._id}/dislike`, {
+        headers: { Authorization: "Bearer " + user.accessToken },
+      });
+    } catch (error) {}
+
+    setLikes((prevlikes) => {
+      return isDisliked ? prevlikes + 1 : prevlikes - 1;
+    });
+    if (isLiked) {
+      setLikes((prevlikes) => {
+        return prevlikes - 1;
+      });
+      setIsLiked(!isLiked);
+    }
+    setIsDisliked(!isDisliked);
   };
   const setcommentHandler = () => {
     setCountComments(Countcomments + 1);
@@ -109,7 +138,7 @@ function Post(props) {
         <hr className="hrh" />
         <div className="postBottom">
           <div className="postBottomLeft">
-            <AiFillHeart
+            <FaArrowAltCircleUp
               onClick={likeHandler}
               className="likeIcon"
               color={isLiked ? "red" : "#e0e0e0ed"}
@@ -120,7 +149,21 @@ function Post(props) {
                 setShowPost(true);
               }}
             >
-              {likes} Likes {Countcomments} Comments
+              {" "}
+              {likes}{" "}
+            </span>
+            <FaArrowAltCircleDown
+              onClick={dislikeHandler}
+              className="likeIcon"
+              color={isDisliked ? "#6453de" : "#e0e0e0ed"}
+            />
+            <span
+              className="postLikeCounter"
+              onClick={() => {
+                setShowPost(true);
+              }}
+            >
+              {Countcomments} Comments
             </span>
           </div>
         </div>
