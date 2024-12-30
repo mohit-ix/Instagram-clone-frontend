@@ -7,7 +7,7 @@ const Intercept = (instance) => {
   const { user, dispatch } = useContext(AuthContext);
   const refreshToken = async () => {
     try {
-      const res = await axios.post("http://localhost:8000/auth/refresh", {
+      const res = await axios.post("http://localhost:8000/user/auth/refresh", {
         token: user.refreshToken,
       });
       dispatch({ type: "REFRESH_TOKEN", payload: res.data });

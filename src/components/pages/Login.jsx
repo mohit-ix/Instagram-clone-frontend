@@ -27,11 +27,10 @@ function Login() {
   const HandlerLoginForm = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8000/auth/login", {
+      const res = await axios.post("http://localhost:8000/user/auth/login", {
         email: username.current.value,
         password: password.current.value,
       });
-      console.log(res);
       const { message, status, ...other } = res.data;
       dispatch({ type: "LOGIN_SUCCESS", payload: other });
     } catch (err) {

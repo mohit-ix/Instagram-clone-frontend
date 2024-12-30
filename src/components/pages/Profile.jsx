@@ -35,7 +35,7 @@ function Profile(props) {
     try {
       if (friend) {
         await axiosJWT.put(
-          `http://localhost:8000/admin/${username}/remove`,
+          `http://localhost:8000/user/admin/${username}/remove`,
           {},
           {
             headers: { Authorization: "Bearer " + currentUser.accessToken },
@@ -44,7 +44,7 @@ function Profile(props) {
         dispatch({ type: "UNFOLLOW", payload: user._id });
       } else {
         await axiosJWT.put(
-          `http://localhost:8000/admin/${username}/add`,
+          `http://localhost:8000/user/admin/${username}/add`,
           {},
           {
             headers: { Authorization: "Bearer " + currentUser.accessToken },
@@ -58,11 +58,11 @@ function Profile(props) {
   useEffect(() => {
     const fetchUser = async () => {
       const res = await axios.get(
-        "http://localhost:8000/admin/u/" + username
+        "http://localhost:8000/user/admin/u/" + username
       );
       setCurrentUser(res.data.user);
       const pst = await axios.get(
-        "http://localhost:8000/u/" + username
+        "http://localhost:8000/user/u/" + username
       );
       setPosts(
         pst.data.sort((p1, p2) => {

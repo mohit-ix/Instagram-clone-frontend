@@ -23,7 +23,7 @@ function Topbar(props) {
   const [searchquery, setSearchquery] = useState("");
   const [showBarSearchMobile, setShowBarSearchMobile] = useState(false);
   const logoutHandler = async () => {
-    await axios.post("http://localhost:8000/auth/logout", {
+    await axios.post("http://localhost:8000/user/auth/logout", {
       refreshToken: user.refreshToken,
     });
     localStorage.setItem("user", null);
@@ -56,7 +56,7 @@ function Topbar(props) {
       try {
         if (searchquery.length >= 1) {
           const searchresult = await axios.get(
-            "http://localhost:8000/admin/searchUser",
+            "http://localhost:8000/user/admin/searchUser",
             {
               params: { search: searchquery },
             }

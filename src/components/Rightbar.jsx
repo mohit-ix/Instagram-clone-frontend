@@ -15,7 +15,7 @@ function Rightbar() {
     const getFriends = async () => {
       try {
         const FriendsList = await axios.get(
-          "http://localhost:8000/admin/friends/" + username
+          "http://localhost:8000/user/admin/friends/" + username
         );
 
         setFriends(FriendsList.data.friends);
@@ -48,7 +48,7 @@ function Rightbar() {
                   className="rightbarFollowingAction"
                   onClick={async () => {
                     await axiosJWT.put(
-                      `http://localhost:8000/admin/${f.username}/remove`,
+                      `http://localhost:8000/user/admin/${f.username}/remove`,
                       {},
                       {
                         headers: {

@@ -28,7 +28,9 @@ function Feed(props) {
     props.onChange(0);
     const fetchPosts = async () => {
       const res = await axiosJWT.get(
-        `http://localhost:8000/home?page=${currPage}`,
+        `http://localhost:8000/homepage`, 
+          // params: {userId: user.data._id, friends: user.data.friends, page: currPage}
+        
         { headers: { Authorization: "Bearer " + user.accessToken } }
       );
       if (res.data.Posts.length === 1) {

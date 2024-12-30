@@ -14,7 +14,7 @@ function Signup() {
     e.preventDefault();
     const data = { email, username, password };
     try {
-      await axios.post("http://localhost:8000/auth/signup", data);
+      await axios.post("http://localhost:8000/user/auth/signup", data);
       navigate("/login");
     } catch (error) {
       NotificationManager.error(error.response.data.message, "Warning", 3000);
