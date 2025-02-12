@@ -1,0 +1,44 @@
+.post-wrap {
+    margin-bottom: 30px;
+}
+
+.top-part {
+    display: flex;
+    padding: 0px 0px 12px 4px; 
+}
+
+.profile-wrap {
+    width: 32px;
+    margin-right: 8px;
+    border-radius: 50%;
+}
+
+.username-wrap {
+    font-size: 18px;
+    color: black;
+}
+
+.post-image {
+    width: 468px;
+    border-radius: 5px;
+}
+
+.bottom-part {
+
+}
+
+.lc-buttons-wrap {
+    display: flex;
+    gap: 12px;
+    padding: 3px 0px;
+}
+
+.lc-button {
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+
+}
+.lc-button.comment {
+    transform: scaleX(-1);
+}

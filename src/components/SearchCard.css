@@ -1,0 +1,33 @@
+.user-card {
+    height: 60px;
+}
+
+.full-card {
+    display: flex;
+    padding: 8px;
+}
+
+.image-section {
+    display: flex;
+}
+
+.search-image-section {
+    width: 44px;
+    margin-right: 12px;
+}
+
+.card-name-wrap {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-username-wrap {
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.card-fullname-wrap {
+    font-size: 16px;
+    color: rgb(115, 115, 115);
+}
