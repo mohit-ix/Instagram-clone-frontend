@@ -1,8 +1,4 @@
-# React + Vite
+This respository is for the clone of Instagram developed using Reactjs.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The backend is developed using Nodejs and is provided in the link below:
+https://github.com/mohit-ix/Instagram-backend-ms
