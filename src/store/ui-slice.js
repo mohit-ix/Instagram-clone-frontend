@@ -4,6 +4,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     showActive: 0,
     showSearch: false,
+    minimize: false,
+    showChatId: null,
     showModal: ""
 }
 
@@ -19,6 +21,14 @@ const uiSlice = createSlice({
         updateSearch(state, action) {
             state.showSearch = action.payload;
         },
+        //function to update the chat id
+        updateChatId(state, action) {
+            state.showChatId = action.payload;
+        },
+        //function to update if the sidebar should be minimized
+        minimizeSidebar(state, action) {
+            state.minimize = action.payload;
+        },
         //function to show upload image modal
         showUploadImage(state) {
             state.showModal = "upload-post";
@@ -33,6 +43,14 @@ const uiSlice = createSlice({
         },
         //function to hide edit profile modal
         hideEditProfile(state) {
+            state.showModal = "";
+        },
+        //function to show new chat modal
+        showNewChat(state) {
+            state.showModal = "new-chat";
+        },
+        //function to hide new chat modal
+        hideNewChat(state) {
             state.showModal = "";
         }
     }

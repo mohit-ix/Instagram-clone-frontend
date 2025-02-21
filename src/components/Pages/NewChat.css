@@ -1,0 +1,29 @@
+.newChat-wrap {
+    display: flex;
+    width: calc(100% - 470px);
+    max-width: 100%;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    margin-left: 470px; 
+    flex-direction: column;
+    gap: 16px;
+}
+
+.sendMessage-icon {
+    width: 96px;
+    height: 96px;
+}
+
+.sendMessage-top {
+    margin: 0px;
+    font-weight: 500;
+    /* font-size: 15px; */
+}
+
+.sendMessage-bottom {
+    /* font-size: 11px; */
+    margin: 0px;
+    font-weight: 500;
+    color: rgb(115, 115, 115);
+}

@@ -45,7 +45,7 @@ export default function Search() {
                   {result.map((user) => {
                     return (
                       <li key={user._id} className="user-item">
-                        <SearchCard user={user} />
+                        <SearchCard user={user} search />
                       </li>
                     );
                   })}

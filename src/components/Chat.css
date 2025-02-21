@@ -1,0 +1,32 @@
+.chat-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: calc(100vh - 76px);
+    width: 100%;
+}
+
+.chat-messages {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    gap: 5px;
+}
+
+.chatInput-wrap {
+    display: flex;
+    height: 44px;
+    margin: 16px;
+}
+
+.chatInput {
+    width: 100%;
+    font-size: 16px;
+    padding: 13px 16px;
+    border-radius: 22px;
+    border: 1px solid;
+    border-color: rgb(219, 219, 219);
+}
+.chatInput:focus-visible {
+    border-color: white
+}

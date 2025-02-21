@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
+import socket from "../../utils/socket";
 import Sidebar from "../SideBar";
 import LightButton from "../UI/LightButton";
 import BlueButton from "../UI/BlueButton";
@@ -23,6 +24,7 @@ export default function Profile() {
   }); //contains the user details that will be requested from backend
   const [posts, setPosts] = useState([]); //contain all posts for user
   const [hasFollowed, setHasFollowed] = useState(false); //check if the user is already followed or not
+  const [followers, setFollowers] = useState(0);
   const currentUser = useSelector((state) => state.userReducer.user); //contains the info of loggedin user
   const accessToken = useSelector((state) => state.userReducer.accessToken); //contains the accessPoint
   const userId = params.userId; //user id of the user of profile page
@@ -33,7 +35,7 @@ export default function Profile() {
       const userInfo = await axios(
         `http://localhost:8000/user/api/admin/get-user/${userId}`
       );
-      setUser(userInfo.data.user);
+      setUser(() => userInfo.data.user);
 
       const postInfo = await axios(
         `http://localhost:8000/post/api/get-userPosts/${userId}`
@@ -49,6 +51,8 @@ export default function Profile() {
     if (currentUser?.following.includes(userId)) {
       setHasFollowed(true);
     }
+
+    setFollowers(user.followers.length);
   }, [hasFollowed, user]);
 
   //this will update the sidebar active button after rendering
@@ -57,6 +61,21 @@ export default function Profile() {
       dispatch(uiActions.updateActive(6));
     }
   }, [currentUser]);
+
+  useEffect(() => {
+    function increaseFollowers() {
+      setFollowers((prev) => (prev += 1));
+    }
+
+    function decreaseFollowers() {
+      setFollowers((prev) => (prev -= 1));
+    }
+
+    //socket for when a user followes
+    socket.on("followInc", increaseFollowers);
+    //socket for when a user unfollows
+    socket.on("followDesc", decreaseFollowers);
+  }, []);
 
   //function to send the follow request
   async function handleFollow() {
@@ -105,7 +124,7 @@ export default function Profile() {
 
   return (
     <div>
-      <div>
+      <div className="sidebar">
         <Sidebar />
       </div>
       <div className="profile-page">
@@ -129,8 +148,7 @@ export default function Profile() {
             </section>
             <section className="info-wrap">
               <span className="info-text">{posts.length}</span> posts{" "}
-              <span className="info-text second">{user.followers.length}</span>{" "}
-              followers{" "}
+              <span className="info-text second">{followers}</span> followers{" "}
               <span className="info-text second">{user.following.length}</span>{" "}
               following
             </section>

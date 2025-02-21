@@ -1,0 +1,45 @@
+.messages-wrap {
+    margin-left: 72px;
+    height: 100vh;
+    display: flex;
+    position: fixed;
+}
+
+.messages-sidewrap {
+    width: 398px;
+    border-right: 1px solid;
+    border-color: rgb(219, 219, 219);
+}
+
+.messages-topwrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 36px 24px 12px 24px;
+}
+
+.messages-username {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.newChat-icon {
+    width: 24px;
+    height: 24px;
+    padding: 8px;
+}
+
+.messages-bottomwrap {
+    display: flex;
+    flex-direction: column;
+}
+
+.messages-headline {
+    padding: 14px 24px 10px 24px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.chats {
+    overflow-y: scroll;
+}

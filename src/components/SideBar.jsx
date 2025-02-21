@@ -11,11 +11,12 @@ import "./SideBar.css";
 export default function SideBar() {
   const showActive = useSelector((state) => state.ui.showActive);
   const showSearch = useSelector((state) => state.ui.showSearch);
+  const minimize = useSelector((state) => state.ui.minimize);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userReducer.user);
   const userId = user?._id;
   const navigate = useNavigate();
-  const spanClass = showSearch ? "span-mobile search-active" : "span-mobile";
+  const spanClass = minimize ? "span-mobile search-active" : "span-mobile";
 
   //function to logout user
   async function handleLogout() {
@@ -47,25 +48,38 @@ export default function SideBar() {
     dispatch(uiActions.updateSearch(!showSearch));
   }
 
-  //this will be activated when clicked on anywhere else sidebar to close search menu
+  function handleMessages() {
+    dispatch(uiActions.updateActive(3));
+    navigate("/direct");
+  }
+
   useEffect(() => {
-    document.body.addEventListener("click", (event) => {
-      const sideBar = document.getElementsByClassName("sidebar");
-      const includeSidebar = event.composedPath().includes(sideBar[0]);
-      if (!includeSidebar) {
-        dispatch(uiActions.updateSearch(false));
-      }
-    });
-  }, []);
+    if(showSearch || showActive == 3) {
+      dispatch(uiActions.minimizeSidebar(true));
+    }
+  }, [showSearch, showActive]);
+
+  //this will be activated when clicked on anywhere else sidebar to close search menu
+  // useEffect(() => {
+  //   document.addEventListener("click", (event) => {
+  //     console.log(event.composedPath());
+  //     const sideBar = document.getElementsByClassName("sidebar");
+  //     const includeSidebar = event.composedPath().includes(sideBar[0]);
+  //     if (!includeSidebar) {
+  //       console.log("component");
+  //       dispatch(uiActions.updateSearch(false));
+  //     }
+  //   });
+  // }, []);
 
   return (
     <>
       <aside
-        className={showSearch ? "sidebar-nav search-active" : "sidebar-nav"}
+        className={minimize ? "sidebar-nav search-active" : "sidebar-nav"}
       >
         <UploadImage />
         <div className="sidebar-wrap">
-          <div className={showSearch ? "nav-logo search-active" : "nav-logo"}>
+          <div className={minimize ? "nav-logo search-active" : "nav-logo"}>
             <a onClick={handleHome}>
               <img src="http://localhost:3000/svg/instagram-text.svg" />
             </a>
@@ -91,7 +105,7 @@ export default function SideBar() {
             </li>
             <li
               className="nav-li"
-              onClick={() => dispatch(uiActions.updateActive(3))}
+              onClick={handleMessages}
             >
               <a className={showActive == 3 ? "nav-items active" : "nav-items"}>
                 <img src="http://localhost:3000/svg/messages.svg" />

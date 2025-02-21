@@ -1,0 +1,29 @@
+.chatWindow-wrap {
+    width: calc(100% - 470px);
+    max-width: 100%;
+    height: 100vh;
+    margin-left: 470px;
+}
+
+.chatWindow-top {
+    display: flex;
+    max-width: 100%;
+    height: 75px;
+    border-bottom: 1px solid;
+    border-color: rgb(219, 219, 219);
+    padding: 0px 16px;
+    align-items: center;
+    gap:6px;
+}
+
+.chatWindow-profile {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+}
+
+.chatWindow-name {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 6px;
+}
