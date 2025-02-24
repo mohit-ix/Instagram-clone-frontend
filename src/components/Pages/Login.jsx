@@ -1,34 +1,47 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
 import axios from "axios";
 import { userActions } from "../../store/user-slice";
 import "./Login.css";
+
+const LoginSchema = Yup.object().shape({
+  username: Yup.string()
+    .min(2, "Too Short!")
+    .max(20, "Too Long!")
+    .required("Required"),
+  password: Yup.string().min(6, "Too Short!").required("Required"),
+});
 
 export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showImg, setShowImg] = useState(1); //represents the change of images to be displayed on the login page
-
+  const [loginError, setLoginError] = useState(false);
   const [username, setUsername] = useState(""); //contains username
   const [password, setPassword] = useState(""); //contains password
 
   //function to sumbit user details for authentication
-  async function submitHandler(e) {
-    e.preventDefault();
+  async function submitHandler(value, actions) {
+    // e.preventDefault();
     try {
-      const data = { username, password };
+      // const data = { username, password };
+      console.log(value);
       const result = await axios.post(
         "http://localhost:8000/user/api/auth/login",
-        data
+        value
       );
-      if (result.status == 200) {
+      if (result.status === 200) {
         const { status, message, data, accessToken } = result.data;
         dispatch(userActions.login({ user: data, accessToken }));
-        navigate('/');
+        navigate("/");
       }
     } catch (err) {
-      console.log(err);
+      if (err.status === 401) {
+        setLoginError(true);
+      }
     }
   }
 
@@ -72,26 +85,40 @@ export default function Login() {
         <div className="right-login-side">
           <div className="right-login-wrapper">
             <div className="instagram-logo"></div>
-            <form className="login-form" onSubmit={submitHandler}>
-              <input
-                className="login-input"
-                placeholder="Enter Username"
-                value={username}
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                }}
-              />
-              <input
-                className="login-input"
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
-              <button className="login-button">Log in</button>
-            </form>
+            <Formik
+              initialValues={{ username: "", password: "" }}
+              validationSchema={LoginSchema}
+              onSubmit={submitHandler}
+            >
+              {({ errors, touched, isSubmitting, isValid, dirty }) => (
+                <Form className="login-form">
+                  <Field
+                    className="login-input"
+                    name="username"
+                    placeholder="E-mail"
+                  />
+                  <Field
+                    className="login-input"
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                  />
+                  <button
+                    disabled={isSubmitting || !(isValid && dirty)}
+                    type="submit"
+                    className="login-button"
+                  >
+                    Log in
+                  </button>
+                  {loginError && (
+                    <div className="login-error">
+                      Sorry, your password was incorrect. Please double-check
+                      your password.
+                    </div>
+                  )}
+                </Form>
+              )}
+            </Formik>
           </div>
           <div className="signup">
             <span>Don't have an account?</span>

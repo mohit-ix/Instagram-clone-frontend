@@ -89,7 +89,7 @@
 
 .login-input {
     height: 30px;
-    margin: 0px 40px 10px 40px;
+    margin: 0px 40px 3px 40px;
     padding: 0px 5px;
 }
 
@@ -103,8 +103,11 @@
     font-weight: 600;
     background-color: rgb(0, 149, 246);
 }
+.login-button:disabled {
+    opacity: .7;
+}
 
-.login-button:hover {
+.login-button:hover:enabled {
     background-color: rgb(0, 86, 236);
 }
 
@@ -123,4 +126,17 @@
     font-weight: 600;
     margin-left: 4px;
     cursor: pointer;
+}
+
+.input-error {
+    color: red;
+    margin: 0px 50px 10px 50px;
+    font-size: 13px;
+}
+
+.login-error {
+    color: red;
+    font-size: 16px;
+    margin: 0px 40px;
+    text-align: center;
 }
